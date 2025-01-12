@@ -210,10 +210,10 @@ HMC5883L_Simple::MagnetometerSample HMC5883L_Simple::ReadAxes()
 /** Write data to the compass by I2C */
 void HMC5883L_Simple::Write(uint8_t register_address, uint8_t data)
 {
-  Wire.beginTransmission(i2c_address);
-  Wire.write(register_address);
-  Wire.write(data);
-  Wire.endTransmission();
+  Wire1.beginTransmission(i2c_address);
+  Wire1.write(register_address);
+  Wire1.write(data);
+  Wire1.endTransmission();
 }
 
 /** Read data from the compass by I2C  
@@ -222,18 +222,18 @@ uint8_t HMC5883L_Simple::Read(uint8_t register_address, uint8_t buffer[], uint8_
 {
   // Write the register address that we will begin the read from, this
   // has the effect of "seeking" to that register
-  Wire.beginTransmission(i2c_address);
-  Wire.write(register_address);
-  Wire.endTransmission();
+  Wire1.beginTransmission(i2c_address);
+  Wire1.write(register_address);
+  Wire1.endTransmission();
   
   // Read the data starting at that register we seeked
-  Wire.requestFrom(i2c_address, length);
+  Wire1.requestFrom(i2c_address, length);
 
-  if(Wire.available() == length)
+  if(Wire1.available() == length)
   {
     for(uint8_t i = 0; i < length; i++)
     {
-      buffer[i] = Wire.read();
+      buffer[i] = Wire1.read();
     }
     
     return length;
